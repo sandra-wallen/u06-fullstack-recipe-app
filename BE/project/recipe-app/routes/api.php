@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/recipe-lists', [RecipeListController::class, 'getAllLists']);
     Route::get('/recipe-list/{id}', [RecipeListController::class, 'getList']);
     Route::post('/recipe-lists/create', [RecipeListController::class, 'createList']);
+    Route::patch('/recipe-list/{id}/rename', [RecipeListController::class, 'renameList']);
     Route::patch('/recipe-list/{id}/add-recipe', [RecipeListController::class, 'addRecipe']);
     Route::patch('/recipe-list/{id}/remove-recipe', [RecipeListController::class, "removeRecipe"]);
     Route::delete('/recipe-list/{id}/delete', [RecipeListController::class, 'deleteList']);

@@ -15,13 +15,15 @@ class RecipeListController extends Controller
         return response($lists, 200);
     }
 
-    public function getList($id) {
+    public function getList($id) 
+    {
         $list = RecipeList::find($id);
 
         return response($list, 200);
     }
 
-    public function createList(Request $request) {
+    public function createList(Request $request) 
+    {
         $fields = $request->validate([
             'title' => 'required|string',
         ]);
@@ -32,6 +34,30 @@ class RecipeListController extends Controller
         ]);
 
         return response($list, 200);
+    }
+
+    public function renameList(Request $request, $id) 
+    {
+        $fields = $request->validate([
+            'title' => 'required|string'
+        ]);
+
+        $list = RecipeList::find($id);
+
+        if ($list == null) {
+
+            return response([
+                "message" => "List not found"
+            ], 404);
+
+        } else {
+
+            $list->title = $fields['title'];
+            $list->update();
+
+            return response($list, 200);
+
+        }
     }
 
     public function addRecipe(Request $request, $id) 
@@ -45,7 +71,9 @@ class RecipeListController extends Controller
         $recipes = [];
 
         if ($list->recipes != null) {
+
             $recipes = json_decode($list->recipes);
+
         }
 
         if (in_array($fields['recipeId'], $recipes)) {
@@ -75,6 +103,7 @@ class RecipeListController extends Controller
         $list = RecipeList::find($id);
 
         if ($list->recipes != null) {
+
             $recipes = [];
 
             if (!in_array($fields['recipeId'], json_decode($list->recipes))) {
@@ -104,17 +133,19 @@ class RecipeListController extends Controller
         $list = RecipeList::find($id);
 
         if ($list == null) {
+
             return response([
                 "message" => "List not found"
             ], 404);
+
         } else {
 
             $list->delete();
-            
+
             return response([
                 "message" => "List was deleted"
             ], 200);
-        
+            
         }
     }
 }
