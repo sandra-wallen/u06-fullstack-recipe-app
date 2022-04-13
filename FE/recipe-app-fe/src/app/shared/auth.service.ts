@@ -22,7 +22,7 @@ export class AuthService {
   ) { }
 
   register(user: object): Observable<any> {
-    let api = `${this.endpoint}/register`;
+    const api = `${this.endpoint}/register`;
     return this.http.post(api, user).pipe(catchError(this.handleError));
   }
 
@@ -34,8 +34,8 @@ export class AuthService {
         localStorage.setItem('username', res.user.username);
         localStorage.setItem('fullname', res.user.fullName);
         localStorage.setItem('email', res.user.email);
-        // Uncomment once the route is set up
-        //this.router.navigate(['/recipes']);
+        
+        this.router.navigate(['/recipes']);
       })
   }
 

@@ -14,11 +14,7 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private authService: AuthService
-    ) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -29,14 +25,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.authService.login(this.form.value);
-
-    //this.http.post('http://localhost:8000/api/login', this.form.value)
-    //  .subscribe((res: any) => {
-    //    console.log(res);
-    //    localStorage.setItem('token', res.token);
-    //    Emitters.authEmitter.emit(true);
-    //    this.router.navigate(['/register'])
-    //  });
   }
 
 }

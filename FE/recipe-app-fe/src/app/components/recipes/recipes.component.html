@@ -1,1 +1,4 @@
-<p>recipes works!</p>
+<div *ngFor="let recipe of recipes">
+  <p>{{ recipe.label }}</p>
+  <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
+</div>
