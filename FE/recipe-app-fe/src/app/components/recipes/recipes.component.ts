@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../../shared/recipe.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Hit, Recipe } from '../../shared/recipe';
 import { RecipesApiResponse } from '../../shared/recipe';
 
@@ -9,14 +10,37 @@ import { RecipesApiResponse } from '../../shared/recipe';
   styleUrls: ['./recipes.component.scss']
 })
 export class RecipesComponent implements OnInit {
+  
+  form!: FormGroup;
 
   recipes: Recipe[] = [];
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
-    this.recipeService.getAllRecipes().subscribe((data: RecipesApiResponse) => {
+    this.recipeService.getAllRecipes().subscribe((data: RecipesApiResponse) => this.setRecipes(data));
 
-      const recipes: Recipe[] = [];
+    this.form = new FormGroup({
+      mealType: new FormControl(''),
+      vegan: new FormControl(''),
+      glutenFree: new FormControl(''),
+      peanutFree: new FormControl('')
+    });
+  }
+
+  onSubmit(): void {
+     
+    const mealType = this.form.value.mealType;
+    const vegan = this.form.value.vegan;
+    const glutenFree = this.form.value.glutenFree;
+    const peanutFree = this.form.value.peanutFree;
+
+    const customQuery = `${mealType ? '&mealType=' + mealType : ''}${vegan ? '&health=vegan' : ''}${glutenFree ? '&health=gluten-free' : ''}${peanutFree ? '&health=peanut-free' : ''}`;
+    this.recipeService.getAllRecipes(customQuery).subscribe((data: RecipesApiResponse) => this.setRecipes(data));
+  }
+
+  setRecipes(data: RecipesApiResponse): void {
+
+    const recipes: Recipe[] = [];
       data.hits.map((val: any) => {
         const recipe: Recipe = {
           label: val.recipe.label,
@@ -34,7 +58,6 @@ export class RecipesComponent implements OnInit {
 
       
       console.log(this.recipes);
-    })
   }
 
 }
