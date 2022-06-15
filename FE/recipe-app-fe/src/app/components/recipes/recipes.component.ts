@@ -42,7 +42,11 @@ export class RecipesComponent implements OnInit {
 
     const recipes: Recipe[] = [];
       data.hits.map((val: any) => {
+
+        const recipeId = val.recipe.uri.split('#recipe_').pop();
+
         const recipe: Recipe = {
+          id: recipeId,
           label: val.recipe.label,
           image: val.recipe.image,
           cautions: val.recipe.cautions,
