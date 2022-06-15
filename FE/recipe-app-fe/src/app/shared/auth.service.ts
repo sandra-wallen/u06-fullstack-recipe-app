@@ -49,10 +49,8 @@ export class AuthService {
   }
 
   logout() {
-    const removeSession = localStorage.clear();
-    if (removeSession === null) {
-      this.router.navigate(['/login']);
-    }
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
   handleError(error: HttpErrorResponse) {
