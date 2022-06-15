@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 
@@ -13,13 +12,17 @@ export class RegisterComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    private http: HttpClient,
     private router: Router,
     private authService: AuthService
   ) {  
   }
 
   ngOnInit(): void {
+
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/recipes']);
+    }
+
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required]),
@@ -48,13 +51,6 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         }
       })
-
-      //this.http.post("http://localhost:8000/api/register", {
-      //  "username": this.form.value.username,
-      //  "fullName": this.form.value.fullname,
-      //  "email": this.form.value.email,
-      //  "password": this.form.value.password
-      //}).subscribe(() => this.router.navigate(['/login']));
     } else {
       alert("Passwords must match");
     }
