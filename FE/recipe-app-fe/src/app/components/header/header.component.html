@@ -12,8 +12,8 @@
           <li *ngIf="!authenticated" class="nav-item">
             <a class="nav-link" aria-current="page" routerLink="/register">register</a>
           </li>
-          <li *ngIf="authenticated" class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="/logout">log out</a>
+          <li *ngIf="authenticated" class="nav-item-logout">
+            <button class="btn-logout" (click)="onLogout()">log out</button>
           </li>
         </ul>
 
