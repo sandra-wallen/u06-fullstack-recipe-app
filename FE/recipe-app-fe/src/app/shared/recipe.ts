@@ -1,4 +1,5 @@
 export interface Recipe {
+  id?: string;
   label: string;
   image: string;
   cautions: string[];
@@ -7,6 +8,10 @@ export interface Recipe {
   totalTime: string;
   cuisineType: string[];
   dishType: string[];
+}
+
+export interface SingleRecipeApiResponse {
+  recipe: Recipe;
 }
 
 export interface Hit {
