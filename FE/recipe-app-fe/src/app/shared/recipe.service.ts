@@ -17,10 +17,12 @@ export class RecipeService {
     public router: Router
   ) { }
 
-  getAllRecipes():Observable<RecipesApiResponse> {
-    const api = `${this.endpoint}&app_id=${this.apiId}&app_key=${this.apiKey}`;
+  getAllRecipes(customQuery?: string): Observable<RecipesApiResponse> {
+    const api = `${this.endpoint}${customQuery ? customQuery : ''}&app_id=${this.apiId}&app_key=${this.apiKey}`;
+    console.log(api);
     return this.http.get<RecipesApiResponse>(api).pipe(catchError(this.handleError));
   }
+
 
   handleError(error: HttpErrorResponse) {
     let msg = '';
