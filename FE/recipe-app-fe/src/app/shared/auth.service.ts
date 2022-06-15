@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './user';
+import { Lists, User } from './user';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -39,8 +39,28 @@ export class AuthService {
       })
   }
 
+  getLists(token: string | null): Observable<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    })
+
+    return this.http.get<any>(`${this.endpoint}/recipe-lists`, {headers: headers}).pipe(catchError(this.handleError));
+  }
+
+  addRecipeToList(listId: string, recipeId: string | undefined, token: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    })
+
+    return this.http.patch<any>(`${this.endpoint}/recipe-list/${listId}/add-recipe`, { "recipeId": recipeId }, { headers: headers })
+  }
+
+
   getToken() {
-    return localStorage.getItem('access_token');
+      return localStorage.getItem('access_token');
   }
 
   get isLoggedIn(): boolean {
