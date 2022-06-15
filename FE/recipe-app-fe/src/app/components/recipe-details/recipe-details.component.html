@@ -1,0 +1,26 @@
+<main>
+  <h1>{{recipe.label}}</h1>
+  <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
+  <p>{{ recipe.totalTime }}</p>
+  <p>{{ recipe.dishType }}</p>
+  <p>{{ recipe.cuisineType }}</p>
+  <p>Cautions: {{ recipe.cautions }}</p>
+
+  <ul>
+    <li *ngFor="let ingredient of recipe.ingredientLines">
+      {{ ingredient }}
+    </li>
+  </ul>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+    <label for="recipeList">Add this recipe to a list?</label>
+    <select id="recipeList" formControlName="recipeList">
+      <option default disabled>Choose a list</option>
+      <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.title }}</option>
+    </select>
+    <button type="submit">Add</button>
+  </form>
+  
+
+
+</main>
