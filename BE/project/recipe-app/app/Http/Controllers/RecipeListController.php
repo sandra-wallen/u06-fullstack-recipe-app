@@ -12,14 +12,31 @@ class RecipeListController extends Controller
     {
         $lists = RecipeList::where('userId', Auth::user()->id)->get();
 
-        return response($lists, 200);
+        if ($lists == null || count($lists) == 0) {
+
+            return response([
+                "message" => "No lists found"
+            ], 404);
+
+        } else {
+            return response($lists, 200);    
+        }
     }
 
     public function getList($id) 
     {
         $list = RecipeList::find($id);
+        
+        if ($list == null || count($list) == 0) {
 
-        return response($list, 200);
+            return response([
+                "message" => "List not found"
+            ], 404);
+
+        } else {
+            return response($list, 200);
+        }
+        
     }
 
     public function createList(Request $request) 
@@ -44,7 +61,7 @@ class RecipeListController extends Controller
 
         $list = RecipeList::find($id);
 
-        if ($list == null) {
+        if ($list == null || count($list) == 0) {
 
             return response([
                 "message" => "List not found"
@@ -132,7 +149,7 @@ class RecipeListController extends Controller
     {
         $list = RecipeList::find($id);
 
-        if ($list == null) {
+        if ($list == null || count($list) == 0) {
 
             return response([
                 "message" => "List not found"
