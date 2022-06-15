@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Emitters } from '../../emitters/emitters';
 import { AuthService } from '../../shared/auth.service';
 
 @Component({
@@ -14,9 +12,17 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService, 
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/recipes']);
+    }
+
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
