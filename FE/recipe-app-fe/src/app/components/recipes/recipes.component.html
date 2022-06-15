@@ -1,4 +1,43 @@
-<div *ngFor="let recipe of recipes">
-  <p>{{ recipe.label }}</p>
-  <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
-</div>
+<main>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <select formControlName="mealType">
+      <option value="breakfast">
+        Breakfast
+      </option>
+      <option value="brunch">
+        Brunch
+      </option>
+      <option value="lunch">
+        Lunch
+      </option>
+      <option value="dinner">
+        Dinner
+      </option>
+      <option value="snack">
+        Snack
+      </option>
+      <option value="teatime">
+        Teatime
+      </option>
+    </select>
+
+    <label for="vegan">Vegan</label>
+    <input id="vegan" type="checkbox" formControlName="vegan" value="vegan" />
+
+    <label for="glutenFree">Gluten free</label>
+    <input id="glutenFree" type="checkbox" formControlName="glutenFree" value="glutenFree" />
+
+    <label for="peanutFree">Peanut free</label>
+    <input id="peanutFree" type="checkbox" formControlName="peanutFree" value="peanutFree" />
+
+    <button type="submit">Filter</button>
+  </form>
+  
+
+
+  <div *ngFor="let recipe of recipes">
+    <p>{{ recipe.label }}</p>
+    <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
+  </div>
+</main>
+
