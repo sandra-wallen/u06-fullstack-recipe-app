@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { RecipesApiResponse } from './recipe';
+import { Recipe, RecipesApiResponse, SingleRecipeApiResponse } from './recipe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
-  endpoint: string = 'https://api.edamam.com/api/recipes/v2?type=public&q=vegetarian';
+  endpoint: string = 'https://api.edamam.com/api/recipes/v2';
   apiId: string = '1e4ecae3';
   apiKey: string = '%208e3b71f7b15b3a51a6f4e1b82cdf2d60';
   constructor(
@@ -18,9 +18,14 @@ export class RecipeService {
   ) { }
 
   getAllRecipes(customQuery?: string): Observable<RecipesApiResponse> {
-    const api = `${this.endpoint}${customQuery ? customQuery : ''}&app_id=${this.apiId}&app_key=${this.apiKey}`;
+    const api = `${this.endpoint}?type=public&q=vegetarian${customQuery ? customQuery : ''}&app_id=${this.apiId}&app_key=${this.apiKey}`;
     console.log(api);
     return this.http.get<RecipesApiResponse>(api).pipe(catchError(this.handleError));
+  }
+
+  getRecipe(id: string): Observable<SingleRecipeApiResponse> {
+    const api = `${this.endpoint}/${id}?type=public&app_id=${this.apiId}&app_key=${this.apiKey}`;
+    return this.http.get<SingleRecipeApiResponse>(api).pipe(catchError(this.handleError));
   }
 
 
