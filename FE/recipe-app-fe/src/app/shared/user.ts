@@ -5,3 +5,7 @@ export class User {
   email!: string;
   password!: string;
 }
+
+export interface Lists {
+  lists: object[];
+}
