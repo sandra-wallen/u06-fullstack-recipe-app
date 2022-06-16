@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
+import { ListService } from 'src/app/shared/list.service';
 import { Recipe, SingleRecipeApiResponse } from 'src/app/shared/recipe';
 import { RecipeService } from 'src/app/shared/recipe.service';
 import { Lists } from 'src/app/shared/user';
@@ -19,7 +20,12 @@ export class RecipeDetailsComponent implements OnInit {
   recipe!: Recipe;
   lists!: any;
   
-  constructor(private route: ActivatedRoute, private recipeService: RecipeService, private authService: AuthService) { 
+  constructor(
+    private route: ActivatedRoute, 
+    private recipeService: RecipeService, 
+    private listService: ListService, 
+    private authService: AuthService
+  ) { 
 
   }
 
@@ -36,7 +42,7 @@ export class RecipeDetailsComponent implements OnInit {
     });
 
     const token = this.authService.getToken;
-    this.authService.getLists(token()).subscribe((data: any) => {
+    this.listService.getLists(token()).subscribe((data: any) => {
       this.lists = data;
       console.log(this.lists)
     })
@@ -69,7 +75,7 @@ export class RecipeDetailsComponent implements OnInit {
     const listId = this.form.value.recipeList;
 
     const token = this.authService.getToken;
-    this.authService.addRecipeToList(listId, this.recipe.id, token()).subscribe((data: any) => console.log(data))
+    this.listService.addRecipeToList(listId, this.recipe.id, token()).subscribe((data: any) => console.log(data))
   }
 
   ngOnDestroy(): void {
