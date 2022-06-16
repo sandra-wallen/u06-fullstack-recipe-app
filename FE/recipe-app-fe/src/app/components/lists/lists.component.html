@@ -1,0 +1,8 @@
+<main>
+  <div *ngFor="let list of lists">
+    <a href="/lists/{{ list.id }}">
+      <p>{{ list.title }}</p>
+      <p>{{ recipesArrCount(list.recipes) }}</p>
+    </a>
+  </div>
+</main>
