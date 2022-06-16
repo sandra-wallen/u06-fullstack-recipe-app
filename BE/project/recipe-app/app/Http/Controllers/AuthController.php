@@ -32,6 +32,7 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
+    
 
     public function login(Request $request) {
 
@@ -57,6 +58,7 @@ class AuthController extends Controller
 
         return response($response, 200);
     }
+
 
     public function logout(Request $request) {
 
