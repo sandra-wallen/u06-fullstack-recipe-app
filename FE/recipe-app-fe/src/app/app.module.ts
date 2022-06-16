@@ -10,6 +10,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
+import { ListsComponent } from './components/lists/lists.component';
+import { ListDetailsComponent } from './components/list-details/list-details.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { RecipeDetailsComponent } from './components/recipe-details/recipe-detai
     RegisterComponent,
     RecipesComponent,
     RecipeDetailsComponent,
+    ListsComponent,
+    ListDetailsComponent,
   ],
   imports: [
     BrowserModule,
