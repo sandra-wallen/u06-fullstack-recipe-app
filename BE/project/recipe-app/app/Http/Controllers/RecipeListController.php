@@ -27,7 +27,7 @@ class RecipeListController extends Controller
     {
         $list = RecipeList::find($id);
         
-        if ($list == null || count($list) == 0) {
+        if ($list == null) {
 
             return response([
                 "message" => "List not found"
@@ -61,7 +61,7 @@ class RecipeListController extends Controller
 
         $list = RecipeList::find($id);
 
-        if ($list == null || count($list) == 0) {
+        if ($list == null) {
 
             return response([
                 "message" => "List not found"
@@ -149,7 +149,7 @@ class RecipeListController extends Controller
     {
         $list = RecipeList::find($id);
 
-        if ($list == null || count($list) == 0) {
+        if ($list == null) {
 
             return response([
                 "message" => "List not found"
