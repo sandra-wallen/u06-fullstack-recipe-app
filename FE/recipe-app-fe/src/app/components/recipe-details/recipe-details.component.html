@@ -1,26 +1,31 @@
-<main>
-  <h1>{{recipe.label}}</h1>
-  <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
-  <p>{{ recipe.totalTime }}</p>
-  <p>{{ recipe.dishType }}</p>
-  <p>{{ recipe.cuisineType }}</p>
-  <p>Cautions: {{ recipe.cautions }}</p>
+<main class="m-2">
+  <a href="/recipes">Back to recipes</a>
 
-  <ul>
-    <li *ngFor="let ingredient of recipe.ingredientLines">
-      {{ ingredient }}
-    </li>
-  </ul>
-
-  <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-    <label for="recipeList">Add this recipe to a list?</label>
-    <select id="recipeList" formControlName="recipeList">
-      <option default disabled>Choose a list</option>
-      <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.title }}</option>
-    </select>
-    <button type="submit">Add</button>
-  </form>
+  <section *ngIf="recipe" class="d-flex flex-wrap justify-content-evenly">
+    <div>
+      <h1>{{recipe.label}}</h1>
+      <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
+      <p class="fw-semibold">{{ recipe.totalTime }} min</p>
+      <p>Dish type: <span class="fw-semibold">{{ recipe.dishType }}</span></p>
+      <p>Cuisine type: <span class="fw-semibold">{{ recipe.cuisineType }}</span></p>
+      <p>Cautions: <span class="fw-semibold">{{ recipe.cautions }}</span></p>
+    
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredientLines">
+          {{ ingredient }}
+        </li>
+      </ul>
+    </div>
   
-
-
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+      <label class="row" for="recipeList">Add this recipe to a list?</label>
+      <p class="text-danger" *ngIf="addRecipeToListErr">{{ addRecipeToListErrMsg }}</p>
+      <p class="text-danger" *ngIf="getListsErr">{{ getListsErrMsg}}</p>
+      <select class="row form-select" id="recipeList" formControlName="recipeList">
+        <option default disabled>Choose a list</option>
+        <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.title }}</option>
+      </select>
+      <button class="row btn btn-secondary px-3" type="submit">Add</button>
+    </form>
+  </section>
 </main>

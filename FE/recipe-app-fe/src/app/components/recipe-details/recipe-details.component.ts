@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { ListService } from 'src/app/shared/list.service';
@@ -19,9 +19,14 @@ export class RecipeDetailsComponent implements OnInit {
   routeSub: Subscription = new Subscription;
   recipe!: Recipe;
   lists!: any;
+  addRecipeToListErr: boolean = false;
+  addRecipeToListErrMsg: string = '';
+  getListsErr: boolean = false;
+  getListsErrMsg: string = '';
   
   constructor(
     private route: ActivatedRoute, 
+    private router: Router,
     private recipeService: RecipeService, 
     private listService: ListService, 
     private authService: AuthService
@@ -30,6 +35,10 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    if (!this.authService.isLoggedIn) {
+      this.router.navigate(['/login']);
+    }
 
     this.routeSub = this.route.params.subscribe(params => {
       const id = params['id'];
@@ -42,14 +51,22 @@ export class RecipeDetailsComponent implements OnInit {
     });
 
     const token = this.authService.getToken;
-    this.listService.getLists(token()).subscribe((data: any) => {
-      this.lists = data;
-      console.log(this.lists)
+    this.listService.getLists(token()).subscribe({
+      next: res => {
+        this.lists = res;
+      },
+      error: err => {
+        this.getListsErr = true;
+        if (err.status === 404) {
+          this.getListsErrMsg = 'No lists found';
+        } else {
+          this.getListsErrMsg = 'Could not load lists';
+        }
+      }
     })
   }
 
   setRecipe(id: string): void {
-    console.log(id)
     this.recipeService.getRecipe(id).subscribe((data: any) => {
       console.log(data)
       const recipeId = data.recipe.uri.split('#recipe_').pop();
@@ -65,7 +82,6 @@ export class RecipeDetailsComponent implements OnInit {
         cuisineType: data.recipe.cuisineType,
         dishType: data.recipe.dishType
       }
-      console.log(this.recipe);
     });
   }
 
@@ -75,7 +91,13 @@ export class RecipeDetailsComponent implements OnInit {
     const listId = this.form.value.recipeList;
 
     const token = this.authService.getToken;
-    this.listService.addRecipeToList(listId, this.recipe.id, token()).subscribe((data: any) => console.log(data))
+    this.listService.addRecipeToList(listId, this.recipe.id, token())
+      .subscribe({
+        error: err => {
+          this.addRecipeToListErr = true;
+          this.addRecipeToListErrMsg = 'Recipe could not be saved';
+        }
+      })
   }
 
   ngOnDestroy(): void {
