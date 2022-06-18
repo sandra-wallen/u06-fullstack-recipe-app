@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ListService {
-  endpoint: string = 'http://localhost:8000/api';
+  endpoint: string = 'https://u06-backend-sandrawallen.herokuapp.com/api';
 
   constructor(private http: HttpClient) { }
 
