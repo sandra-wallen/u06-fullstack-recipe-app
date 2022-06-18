@@ -2,17 +2,17 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()"> 
     <h1 class="h3 mb-3 fw-normal">log in</h1>
 
-    <div class="form-floating">
+    <div class="form-floating my-1">
       <input formControlName="email" type="email" id="login-email" class="form-control" placeholder="name@example.com" required />
       <label for="login-email">Email address</label>
     </div>
 
-    <div class="form-floating">
+    <div class="form-floating my-1">
       <input formControlName="password" type="password" id="login-pwd" class="form-control" placeholder="Password" required />
       <label for="login-pwd">Password</label>
     </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-secondary" type="submit">Sign in</button>
 
   </form>
 </main>

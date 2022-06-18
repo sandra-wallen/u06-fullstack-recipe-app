@@ -30,7 +30,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.login(this.form.value);
+    this.authService.login(this.form.value).subscribe({
+      next: res => {
+        localStorage.setItem('access_token', res.token);
+        localStorage.setItem('_id', res.user.id);
+        localStorage.setItem('username', res.user.username);
+        localStorage.setItem('fullname', res.user.fullName);
+        localStorage.setItem('email', res.user.email);
+        this.router.navigate(['/recipes']);
+      },
+      error: err => {
+        if (err.status === 401 || err.status === 422) {
+          alert(err.error.message);
+        }
+      }
+    })
   }
 
 }
