@@ -35,11 +35,6 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    if (!this.authService.isLoggedIn) {
-      this.router.navigate(['/login']);
-    }
-
     this.routeSub = this.route.params.subscribe(params => {
       const id = params['id'];
 
@@ -56,6 +51,7 @@ export class RecipeDetailsComponent implements OnInit {
         this.lists = res;
       },
       error: err => {
+        // Set error bool to true -> render message in template
         this.getListsErr = true;
         if (err.status === 404) {
           this.getListsErrMsg = 'No lists found';
@@ -68,7 +64,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   setRecipe(id: string): void {
     this.recipeService.getRecipe(id).subscribe((data: any) => {
-      console.log(data)
+      // Retrieve recipe ID from uri, not available as an own key
       const recipeId = data.recipe.uri.split('#recipe_').pop();
 
       this.recipe = {
@@ -94,12 +90,14 @@ export class RecipeDetailsComponent implements OnInit {
     this.listService.addRecipeToList(listId, this.recipe.id, token())
       .subscribe({
         error: err => {
+          // Set error bool to true -> render message in template
           this.addRecipeToListErr = true;
           this.addRecipeToListErrMsg = 'Recipe could not be saved';
         }
       })
   }
 
+  // Unsubscribe to route when component dismounts
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
   }

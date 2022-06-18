@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { ListService } from 'src/app/shared/list.service';
-import { RecipeService } from 'src/app/shared/recipe.service';
 
 @Component({
   selector: 'app-lists',
@@ -26,17 +25,13 @@ export class ListsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    if (!this.authService.isLoggedIn) {
-      this.router.navigate(['/login']);
-    }
-
     const token = this.authService.getToken;
     this.listService.getLists(token()).subscribe({
       next: res => {
         this.lists = res;
       },
       error: err => {
+        // Set error bool to true -> render message in template
         if (err.status === 404) {
           this.getListsErr = true;
           this.getListsErrMsg = err.error.message;
@@ -59,6 +54,7 @@ export class ListsComponent implements OnInit {
         this.lists = [...this.lists, res];
       },
       error: err => {
+        // Set error bool to true -> render message in template
         this.postListErr = true;
         this.postListErrMsg = err.error.message;
       }
@@ -66,6 +62,7 @@ export class ListsComponent implements OnInit {
   }
 
   recipesArrCount(arr: string | null | undefined): any {
+    // Check if recipes key in list object is a string = a stringified array, if true render array length
     return typeof arr === "string" ? JSON.parse(arr).length : '0';
   }
 

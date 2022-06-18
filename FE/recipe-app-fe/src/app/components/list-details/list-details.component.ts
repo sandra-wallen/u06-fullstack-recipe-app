@@ -33,20 +33,18 @@ export class ListDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    if (!this.authService.isLoggedIn) {
-      this.router.navigate(['/login']);
-    }
-
+    // Get id from url
     this.routeSub = this.route.params.subscribe(params => {
       const id = params['id'];
 
       const token = this.authService.getToken;
       this.listService.getList(token(), id).subscribe((data: any) => {
+        // Recipe array stored as string, needs to be parsed
         const parseRecipesArr = JSON.parse(data.recipes);
         
         const recipes: { id: any; label: any; }[] = [];
         if (parseRecipesArr !== null) {
+          // Iterate over each id in recipe array, make API call to Edamam with id
           parseRecipesArr.forEach((recipeId: any) => {
           
             this.recipeService.getRecipe(recipeId).subscribe((recipeData: any) => {
@@ -67,6 +65,7 @@ export class ListDetailsComponent implements OnInit {
     })
   }
 
+  // Show edit title form
   onEditToggle(): void {
     this.editTitle = !this.editTitle;
   }
@@ -116,12 +115,14 @@ export class ListDetailsComponent implements OnInit {
           this.list.recipes = filteredRecipeArr;
         },
         error: err => {
+          // Set error bool to true -> render message in template
           this.removeRecipeErr = true;
           this.removeRecipeErrMsg = err.error.message;
         }
       })
   }
 
+  // Unsubscribe to route when component dismounts
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
   }

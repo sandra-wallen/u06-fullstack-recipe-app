@@ -13,9 +13,9 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard]},
-  {path: 'recipes/:id', component: RecipeDetailsComponent},
-  {path: 'lists', component: ListsComponent},
-  {path: 'lists/:id', component: ListDetailsComponent}
+  {path: 'recipes/:id', component: RecipeDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'lists', component: ListsComponent, canActivate: [AuthGuard]},
+  {path: 'lists/:id', component: ListDetailsComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

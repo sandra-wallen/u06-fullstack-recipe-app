@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../../shared/recipe.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Hit, Recipe } from '../../shared/recipe';
+import { Recipe } from '../../shared/recipe';
 import { RecipesApiResponse } from '../../shared/recipe';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
@@ -23,10 +23,6 @@ export class RecipesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn) {
-      this.router.navigate(['/login']);
-    }
-
     this.recipeService.getAllRecipes().subscribe((data: RecipesApiResponse) => this.setRecipes(data));
 
     this.form = new FormGroup({
@@ -38,7 +34,7 @@ export class RecipesComponent implements OnInit {
   }
 
   onSubmit(): void {
-     
+    // Make custom query dependant on user input in filtering form     
     const mealType = this.form.value.mealType;
     const vegan = this.form.value.vegan;
     const glutenFree = this.form.value.glutenFree;
@@ -52,7 +48,7 @@ export class RecipesComponent implements OnInit {
 
     const recipes: Recipe[] = [];
       data.hits.map((val: any) => {
-
+        // Retrieve recipe ID from uri, not available as an own key
         const recipeId = val.recipe.uri.split('#recipe_').pop();
 
         const recipe: Recipe = {
