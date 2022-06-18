@@ -5,18 +5,25 @@
       
       <div class="collapse navbar-collapse" id="navbarCollapse">
         
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li *ngIf="!authenticated" class="nav-item">
+        <ul *ngIf="!authenticated" class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
             <a class="nav-link" aria-current="page" routerLink="/login">log in</a>
           </li>
-          <li *ngIf="!authenticated" class="nav-item">
+          <li  class="nav-item">
             <a class="nav-link" aria-current="page" routerLink="/register">register</a>
           </li>
-          <li *ngIf="authenticated" class="nav-item-logout">
-            <button class="btn-logout" (click)="onLogout()">log out</button>
+        </ul>
+        <ul *ngIf="authenticated" class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/recipes">browse recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/lists">recipe lists</a>
+          </li>
+          <li class="nav-item-logout">
+            <button class="btn-logout ms-auto" (click)="onLogout()">log out</button>
           </li>
         </ul>
-
       </div>
     </div>
   </nav>
