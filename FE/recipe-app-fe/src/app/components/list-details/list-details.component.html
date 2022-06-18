@@ -1,6 +1,35 @@
+<main class="m-2">
+  <a href="/lists">Back to lists</a>
 
-<div *ngIf="list">
-  <div *ngFor="let recipe of list.recipes">
-    <p>{{ recipe.label }}</p>
-  </div>
-</div>
+  <section class="d-flex justify-content-evenly flex-wrap" *ngIf="list">
+    <div>
+      <h1>{{ list.title }}</h1>
+      <button class="btn btn-secondary m-1" *ngIf="editTitle === false" type="button" (click)="onEditToggle()">Rename list</button>
+      <button class="btn btn-danger m-1" type="button" (click)="onDeleteList($event)">Delete list</button>
+
+      <p *ngIf="deleteListErr">{{ deleteListErrMsg }}</p>
+      <p *ngIf="patchTitleErr">{{ patchTitleErrMsg }}</p>
+      <form *ngIf="editTitle === true" [formGroup]="renameForm" (ngSubmit)="onRenameList($event)">
+        <label class="form-label" for="title">Title</label>
+        <input class="form-control my-1" id="title" type="text" formControlName="title" >
+        <button class="btn btn-secondary m-1" type="submit">Save</button>
+        <button class="btn btn-secondary m-1" type="button" (click)="onEditToggle()">Close</button>
+      </form>
+    </div>
+
+    <div>
+      <p *ngIf="removeRecipeErr">{{ removeRecipeErrMsg }}</p>
+      <div *ngIf="list.recipes.length > 0">
+        <div class="card my-2" *ngFor="let recipe of list.recipes">
+          <div class="card-body">
+            <a class="card-title row text-dark" href="/recipes/{{ recipe.id }}">{{ recipe.label }}</a>
+            <button class="btn btn-secondary row" (click)="onRemoveRecipe($event, recipe.id)">Remove</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="list.recipes.length === 0">
+        <p>No recipes added to this list yet</p>
+      </div>
+    </div>
+  </section>
+</main>
