@@ -1,45 +1,71 @@
-<main>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <select formControlName="mealType">
-      <option value="breakfast">
-        Breakfast
-      </option>
-      <option value="brunch">
-        Brunch
-      </option>
-      <option value="lunch">
-        Lunch
-      </option>
-      <option value="dinner">
-        Dinner
-      </option>
-      <option value="snack">
-        Snack
-      </option>
-      <option value="teatime">
-        Teatime
-      </option>
-    </select>
+<main class="mx-5">
+  <section class="bg-light p-5 rounded">
+    <h1>Recipes</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <p class="fs-6">Filter results</p>
+      <div class="row">
+        <div class="col">
+        <select class="form-select" formControlName="mealType">
+          <option value="" disabled>Select meal type</option>
+          <option value="breakfast">
+            Breakfast
+          </option>
+          <option value="brunch">
+            Brunch
+          </option>
+          <option value="lunch">
+            Lunch
+          </option>
+          <option value="dinner">
+            Dinner
+          </option>
+          <option value="snack">
+            Snack
+          </option>
+          <option value="teatime">
+            Teatime
+          </option>
+        </select>
+      </div>
 
-    <label for="vegan">Vegan</label>
-    <input id="vegan" type="checkbox" formControlName="vegan" value="vegan" />
+      <div class="col-auto">
+        <div class="form-check">
+          <input id="vegan" class="form-check-input" type="checkbox" formControlName="vegan" value="vegan" />
+          <label for="vegan" class="form-check-label">Vegan</label>
+        </div>
+      </div>
 
-    <label for="glutenFree">Gluten free</label>
-    <input id="glutenFree" type="checkbox" formControlName="glutenFree" value="glutenFree" />
+      <div class="col-auto">
+        <div class="form-check">
+          <input id="glutenFree" class="form-check-input" type="checkbox" formControlName="glutenFree" value="glutenFree" />
+          <label for="glutenFree" class="form-check-label">Gluten free</label>
+        </div>
+        </div>
 
-    <label for="peanutFree">Peanut free</label>
-    <input id="peanutFree" type="checkbox" formControlName="peanutFree" value="peanutFree" />
+        <div class="col-auto">
+        <div class="form-check">
+          <input id="peanutFree" class="form-check-input" type="checkbox" formControlName="peanutFree" value="peanutFree" />
+          <label for="peanutFree" class="form-check-label">Peanut free</label>
+        </div>
+      </div>
 
-    <button type="submit">Filter</button>
-  </form>
+      <div class="col">
+        <button class="btn btn-secondary px-3" type="submit">Filter</button>
+      </div>
+      </div>
+    </form>
+  </section>
   
 
-
-  <div *ngFor="let recipe of recipes">
-    <a href="/recipes/{{ recipe.id }}">
-      <p>{{ recipe.label }}</p>
-      <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
-    </a>
-  </div>
+  <section class="d-flex flex-row justify-content-evenly flex-wrap p-1 m-1">
+    <div class="card bg-dark my-1 p-2" style="width: 18rem" *ngFor="let recipe of recipes">
+      <a href="/recipes/{{ recipe.id }}">
+      <img src="{{ recipe.image }}" class="card-img-top rounded" alt="{{ recipe.label }}">
+      <div class="card-body">
+        <h2 class="card-title text-decoration-underline fs-5 text-light">{{ recipe.label }}</h2>
+      </div>
+      </a>
+    </div>
+  </section>
 </main>
 
