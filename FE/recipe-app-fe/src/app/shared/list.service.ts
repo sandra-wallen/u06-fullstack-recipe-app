@@ -10,6 +10,7 @@ export class ListService {
 
   constructor(private http: HttpClient) { }
 
+  // Reusable http headers function
   generateHttpHeaders(token: string | null) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

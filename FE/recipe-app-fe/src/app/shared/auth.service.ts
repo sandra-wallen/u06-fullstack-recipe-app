@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
+  HttpHeaders
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -14,6 +13,7 @@ export class AuthService {
   endpoint: string = 'https://u06-backend-sandrawallen.herokuapp.com/api';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
+
   constructor(
     private http: HttpClient, 
     public router: Router
@@ -27,10 +27,12 @@ export class AuthService {
     return this.http.post<any>(`${this.endpoint}/login`, user, { headers: this.headers });
   }
 
+  // Can be called to retrieve token
   getToken() {
       return localStorage.getItem('access_token');
   }
 
+  // Can be called to check if user is logged in
   get isLoggedIn(): boolean {
     const authToken = localStorage.getItem('access_token');
     return authToken !== null ? true : false;

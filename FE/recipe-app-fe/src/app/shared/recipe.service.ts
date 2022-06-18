@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Recipe, RecipesApiResponse, SingleRecipeApiResponse } from './recipe';
+import { RecipesApiResponse, SingleRecipeApiResponse } from './recipe';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class RecipeService {
     return this.http.get<SingleRecipeApiResponse>(api).pipe(catchError(this.handleError));
   }
 
-
+  // Error handler
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {

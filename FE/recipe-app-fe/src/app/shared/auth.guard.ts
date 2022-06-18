@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
     public router: Router
   ) { }
 
+  // Can be used to protect routes
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

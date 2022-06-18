@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 
@@ -32,7 +32,8 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  checkPasswords() {
+  // Check if password and repeat password match
+  checkPasswords(): boolean {
     return this.form.value.password === this.form.value.repeatPassword ? true : false;
   }
 
@@ -51,6 +52,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         error: err => {
+          // Alert if not all fields filled in
           if (err.status === 422) {
             alert(err.error.message);
           }
@@ -58,6 +60,7 @@ export class RegisterComponent implements OnInit {
       })
       
     } else {
+      // Alert if password and password repeat doesn't match
       alert("Passwords must match");
     }
   }}

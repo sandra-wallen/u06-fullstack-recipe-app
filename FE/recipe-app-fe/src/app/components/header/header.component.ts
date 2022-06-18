@@ -8,10 +8,10 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class HeaderComponent implements OnInit {
   authenticated: boolean = false;
+
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    console.log(this.authService.isLoggedIn)
     this.authenticated  = this.authService.isLoggedIn;
   }
 

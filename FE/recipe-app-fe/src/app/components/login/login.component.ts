@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.authService.login(this.form.value).subscribe({
+      // Set user info to localStorage
       next: res => {
         localStorage.setItem('access_token', res.token);
         localStorage.setItem('_id', res.user.id);
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/recipes']);
       },
       error: err => {
+        // Alert if incorrect credentials or not all fields filled in error
         if (err.status === 401 || err.status === 422) {
           alert(err.error.message);
         }
