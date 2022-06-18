@@ -3,6 +3,8 @@ import { RecipeService } from '../../shared/recipe.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Hit, Recipe } from '../../shared/recipe';
 import { RecipesApiResponse } from '../../shared/recipe';
+import { AuthService } from 'src/app/shared/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -14,9 +16,17 @@ export class RecipesComponent implements OnInit {
   form!: FormGroup;
 
   recipes: Recipe[] = [];
-  constructor(private recipeService: RecipeService) { }
+  constructor(
+    private recipeService: RecipeService, 
+    private authService: AuthService, 
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    if (!this.authService.isLoggedIn) {
+      this.router.navigate(['/login']);
+    }
+
     this.recipeService.getAllRecipes().subscribe((data: RecipesApiResponse) => this.setRecipes(data));
 
     this.form = new FormGroup({
@@ -59,9 +69,6 @@ export class RecipesComponent implements OnInit {
         recipes.push(recipe)
       })
       this.recipes = recipes;
-
-      
-      console.log(this.recipes);
   }
 
 }
