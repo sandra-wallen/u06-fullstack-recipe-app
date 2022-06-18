@@ -1,7 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,42 +10,48 @@ export class ListService {
 
   constructor(private http: HttpClient) { }
 
-  getLists(token: string | null): Observable<any> {
-
+  generateHttpHeaders(token: string | null) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     })
 
-    return this.http.get<any>(`${this.endpoint}/recipe-lists`, {headers: headers}).pipe(catchError(this.handleError));
+    return headers;
+  }
+
+  getLists(token: string | null): Observable<any> {
+
+    return this.http.get<any>(`${this.endpoint}/recipe-lists`, { headers: this.generateHttpHeaders(token) });
   }
 
   getList(token: string | null, id: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    })
 
-    return this.http.get<any>(`${this.endpoint}/recipe-list/${id}`, { headers: headers }).pipe(catchError(this.handleError));
+    return this.http.get<any>(`${this.endpoint}/recipe-list/${id}`, { headers: this.generateHttpHeaders(token) });
+  }
+
+  createList(token: string | null, title: string): Observable<any> {
+
+    return this.http.post<any>(`${this.endpoint}/recipe-lists/create`, { "title": title }, { headers: this.generateHttpHeaders(token) });
+  }
+
+  renameList(token: string | null, listId: string, title: string): Observable<any> {
+
+    return this.http.patch<any>(`${this.endpoint}/recipe-list/${listId}/rename`, { "title": title }, { headers: this.generateHttpHeaders(token) });
+  }
+
+  deleteList(token: string | null, listId: string): Observable<any> {
+
+    return this.http.delete<any>(`${this.endpoint}/recipe-list/${listId}/delete`, { headers: this.generateHttpHeaders(token) });
   }
 
   addRecipeToList(listId: string, recipeId: string | undefined, token: string | null): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    })
 
-    return this.http.patch<any>(`${this.endpoint}/recipe-list/${listId}/add-recipe`, { "recipeId": recipeId }, { headers: headers }).pipe(catchError(this.handleError));
+    return this.http.patch<any>(`${this.endpoint}/recipe-list/${listId}/add-recipe`, { "recipeId": recipeId }, { headers: this.generateHttpHeaders(token) });
   }
 
-  handleError(error: HttpErrorResponse) {
-    let msg = '';
-    if (error.error instanceof ErrorEvent) {
-      msg = error.error.message;
-    } else {
-      msg = `Error Code: ${error.status}\nMessage: ${error.message}`
-    }
+  removeRecipeFromList(token: string | null, listId: string, recipeId: string): Observable<any> {
 
-    return throwError(() => new Error(msg));
+    return this.http.patch<any>(`${this.endpoint}/recipe-list/${listId}/remove-recipe`, { "recipeId": recipeId }, { headers: this.generateHttpHeaders(token) });
   }
+
 }
