@@ -65,8 +65,8 @@ export class ListsComponent implements OnInit {
     })
   }
 
-  recipesArrCount(arr: string): Array<string> {
-    return arr !== null ? JSON.parse(arr).length : '0';
+  recipesArrCount(arr: string | null | undefined): any {
+    return typeof arr === "string" ? JSON.parse(arr).length : '0';
   }
 
 }
