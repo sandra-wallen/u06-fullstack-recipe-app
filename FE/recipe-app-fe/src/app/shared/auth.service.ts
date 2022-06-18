@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Lists, User } from './user';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 import {
   HttpClient,
   HttpHeaders,
@@ -22,21 +20,11 @@ export class AuthService {
   ) { }
 
   register(user: object): Observable<any> {
-    const api = `${this.endpoint}/register`;
-    return this.http.post(api, user).pipe(catchError(this.handleError));
+    return this.http.post<any>(`${this.endpoint}/register`, user, { headers: this.headers });
   }
 
   login(user: object) {
-    return this.http.post<any>(`${this.endpoint}/login`, user)
-      .subscribe((res: any) => {
-        localStorage.setItem('access_token', res.token);
-        localStorage.setItem('_id', res.user.id);
-        localStorage.setItem('username', res.user.username);
-        localStorage.setItem('fullname', res.user.fullName);
-        localStorage.setItem('email', res.user.email);
-        
-        this.router.navigate(['/recipes']);
-      })
+    return this.http.post<any>(`${this.endpoint}/login`, user, { headers: this.headers });
   }
 
   getToken() {
@@ -53,14 +41,4 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  handleError(error: HttpErrorResponse) {
-    let msg = '';
-    if (error.error instanceof ErrorEvent) {
-      msg = error.error.message;
-    } else {
-      msg = `Error Code: ${error.status}\nMessage: ${error.message}`
-    }
-
-    return throwError(() => new Error(msg));
-  }
 }
