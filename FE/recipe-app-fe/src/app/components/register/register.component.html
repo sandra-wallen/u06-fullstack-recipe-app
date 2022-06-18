@@ -2,32 +2,32 @@
   <form [formGroup]="form" (submit)="onSubmit()">
     <h1 class="h3 mb-3 fw-normal">register</h1>
 
-    <div class="form-floating">
+    <div class="form-floating my-1">
       <input type="email" formControlName="email" id="register-email" class="form-control" placeholder="name@example.com" required />
       <label for="register-email">email</label>
     </div>
 
-    <div class="form-floating">
+    <div class="form-floating my-1">
       <input type="text" formControlName="username" id="register-username" class="form-control" placeholder="username" required />
       <label for="register-username">username</label>
     </div>
 
-    <div class="form-floating">
+    <div class="form-floating my-1">
       <input type="text" formControlName="fullname" id="register-fullname" class="form-control" placeholder="full name" required />
       <label for="register-fullname">full name</label>
     </div>
 
-    <div class="form-floating">
+    <div class="form-floating my-1">
       <input type="password" formControlName="password" id="register-pwd" class="form-control" placeholder="password" required />
       <label for="register-pwd">password</label>
     </div>
 
-    <div class="form-floating">
+    <div class="form-floating my-1">
       <input type="password" formControlName="repeatPassword" id="register-repeatpwd" class="form-control" placeholder="repeat password" required />
       <label for="register-repeatpwd">repeat password</label>
     </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">register</button>
+    <button class="w-100 btn btn-lg btn-secondary" type="submit">register</button>
 
   </form>
 </main>

@@ -45,12 +45,18 @@ export class RegisterComponent implements OnInit {
         "password": this.form.value.password
       };
 
-      this.authService.register(user).subscribe((res: any) => {
-        if (res.user) {
+      this.authService.register(user).subscribe({
+        next: res => {
           this.form.reset();
           this.router.navigate(['/login']);
+        },
+        error: err => {
+          if (err.status === 422) {
+            alert(err.error.message);
+          }
         }
       })
+      
     } else {
       alert("Passwords must match");
     }
