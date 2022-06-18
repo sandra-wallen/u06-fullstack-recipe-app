@@ -1,8 +1,21 @@
-<main>
-  <div *ngFor="let list of lists">
-    <a href="/lists/{{ list.id }}">
-      <p>{{ list.title }}</p>
-      <p>{{ recipesArrCount(list.recipes) }}</p>
-    </a>
-  </div>
+<main class="d-flex justify-content-evenly flex-wrap">
+  <section >
+    <p class="fs-5 text">Create new list</p>
+    <p class="text-danger" *ngIf="postListErr">{{ postListErrMsg }}</p>
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+      <label class="form-label" for="title">List title</label>
+      <input class="form-control my-1" id="title" type="text" formControlName="title" />
+      <button class="btn btn-secondary" type="submit">Create</button>
+    </form>
+  </section>
+
+  <section>
+    <div class="card my-2" *ngFor="let list of lists">
+      <a class="card-body text-decoration-none" href="/lists/{{ list.id }}">
+        <p class="card-title text-decoration-underline">{{ list.title }}</p>
+        <p class="card-text">{{ recipesArrCount(list.recipes) }} recipes</p>
+      </a>
+    </div>
+    <p class="fs-4 text-danger" *ngIf="getListsErr">{{ getListsErrMsg }}</p>
+  </section>
 </main>
