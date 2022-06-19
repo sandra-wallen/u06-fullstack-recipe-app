@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ListService {
-  endpoint: string = environment.API_URL;
+  endpoint: string = 'https://u06-backend-sandrawallen.herokuapp.com/api'
 
   constructor(private http: HttpClient) { }
 
