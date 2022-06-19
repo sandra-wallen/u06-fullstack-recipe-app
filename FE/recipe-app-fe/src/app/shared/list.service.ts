@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListService {
-  endpoint: string = 'https://u06-backend-sandrawallen.herokuapp.com/api';
+  endpoint: string = environment.API_URL;
 
   constructor(private http: HttpClient) { }
 

@@ -4,14 +4,15 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { RecipesApiResponse, SingleRecipeApiResponse } from './recipe';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
   endpoint: string = 'https://api.edamam.com/api/recipes/v2';
-  apiId: string = '1e4ecae3';
-  apiKey: string = '%208e3b71f7b15b3a51a6f4e1b82cdf2d60';
+  apiId: string | undefined = environment.RECIPE_API_ID;
+  apiKey: string | undefined = environment.RECIPE_API_KEY;
   constructor(
     private http: HttpClient, 
     public router: Router

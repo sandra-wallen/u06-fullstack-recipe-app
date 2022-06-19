@@ -5,12 +5,13 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  endpoint: string = 'https://u06-backend-sandrawallen.herokuapp.com/api';
+  endpoint: string = environment.API_URL;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
