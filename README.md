@@ -17,6 +17,8 @@ There are some places in the code where I am using type any. Mainly I had some i
 
 There are some things about observables and subscriptions to those that I'm not completely certain of, like when should I unsubsribe to an observable and what does the unsubscription actually do?
 
+I tried to make a script that would write the dotenv variables to the Angular environment files but this didn't work because TypeScript was complaining. I asked around with some people in the class and they said it was fine to write the variables directly in the environment files, so I did.
+
 The recipe data is fetched from Edamam api
 
 ## Things I would have improved if I had more time
